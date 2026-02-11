@@ -64,7 +64,7 @@ function stopAudio() {
     document.getElementById('stopBtn').disabled = true;
     document.getElementById('status').innerText = 'Stopped';
     document.getElementById('status').style.color = '#888';
-    document.getElementById('hz-val').innerText = '----.--';
+    document.getElementById('hz-val').innerText = '---.--';
     document.getElementById('db-val').innerText = '---.-';
     
     // Reset all string rows
@@ -130,7 +130,7 @@ function detectPitch() {
     
     // Check if signal is above threshold
     if (db < DB_THRESHOLD) {
-        document.getElementById('hz-val').innerText = '----.--';
+        document.getElementById('hz-val').innerText = '---.--';
         lastValidFreq = null;
         return;
     }
