@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎸 Guitar Tuner</title>
+    <meta name="description" content="Real-time guitar tuner using Web Audio API. No installation required.">
+    <meta name="theme-color" content="#1e1e1e">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎸</text></svg>">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <h1>🎸 Guitar Tuner</h1>
+        <p>Real-time guitar tuning with frequency detection</p>
+    </header>
+
+    <!-- Settings Bar -->
+    <div class="settings-bar">
+        <div class="setting-group">
+            <label for="refFreq">Reference:</label>
+            <select id="refFreq" onchange="updateReferenceFreq()">
+                <option value="432">432 Hz</option>
+                <option value="440" selected>440 Hz (Standard)</option>
+                <option value="442">442 Hz</option>
+                <option value="444">444 Hz</option>
+            </select>
+        </div>
+        <div class="setting-group">
+            <label for="dbThreshold">Sensitivity:</label>
+            <input type="range" id="dbThreshold" min="-60" max="-20" value="-40" onchange="updateThreshold()">
+            <span id="dbThresholdVal">-40 dB</span>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-container">
+        <!-- Left Panel: Controls, Display, String Rows -->
+        <div class="left-panel">
+            <!-- Control Buttons -->
+            <div class="controls">
+                <button id="startBtn" class="btn btn-start" onclick="startAudio()">🎤 Start Microphone</button>
+                <button id="stopBtn" class="btn btn-stop" onclick="stopAudio()" disabled>⏹ Stop</button>
+                <span id="status" class="status">Click Start to begin</span>
+            </div>
+            
+            <!-- Main Frequency Display -->
+            <div class="main-display">
+                <div class="freq-line">
+                    <span id="hz-val" class="freq-val">----.--</span><span class="freq-unit"> Hz</span>
+                    <span style="color: #444;"> | </span>
+                    <span id="db-val" class="db-val">---.-</span><span class="db-unit"> dB</span>
+                </div>
+            </div>
+            
+            <!-- String Rows (rendered by JavaScript) -->
+            <div id="string-rows"></div>
+        </div>
+        
+        <!-- Right Panel: Piano Keyboard -->
+        <div class="right-panel">
+            <div class="piano-title">⌨️ Piano Keyboard <span style="font-size: 11px; color: #555;">(click to play)</span></div>
+            <div id="piano-container" class="piano-container"></div>
+        </div>
+    </main>
+
+    <!-- JavaScript (load order matters) -->
+    <script src="js/config.js"></script>
+    <script src="js/audio.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/app.js"></script>
+
+</body>
+</html>

@@ -1,235 +1,149 @@
 # 🎸 Guitar Tuner - Web App
 
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://guitar-tuner-web.streamlit.app)
-[![GitHub](https://img.shields.io/badge/GitHub-vctmasters1-blue?logo=github)](https://github.com/vctmasters1/PDS-Guitar-Tuner-WEB)
-[![Python 3.8+](https://img.shields.io/badge/Python-3.8%2B-blue)](https://www.python.org/downloads/)
+[![GitHub Pages](https://img.shields.io/badge/Live-GitHub%20Pages-brightgreen)](https://vctmasters1.github.io/Guitar-Tuner-WEB/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![No Dependencies](https://img.shields.io/badge/Dependencies-None-blue)]()
 
-> **🎵 Try it now:** [Live Demo](https://guitar-tuner-web.streamlit.app)
+A real-time guitar tuner that runs entirely in your browser. **No installation, no server, no dependencies** - just open and tune!
 
-A real-time guitar tuner web application built with Streamlit. No installation required - just open in your browser!
+## 🎵 Try It Now
+
+**[Open Guitar Tuner](https://vctmasters1.github.io/Guitar-Tuner-WEB/)** ← Click to use immediately!
+
+Or download `index.html` and open it directly in your browser.
 
 ## ⚡ Quick Start
 
 ### Option 1: Use Online (Recommended)
-🌐 **[Click here to use the live app](https://guitar-tuner-web.streamlit.app)** - Works on any device with a browser and microphone!
+Click the link above. That's it!
 
-### Option 2: Run Locally (Windows - Easiest!)
-After running the setup script once:
+### Option 2: Run Locally
+1. Download or clone this repository
+2. Open `index.html` in any modern browser
+3. Done!
 
-1. **Open PowerShell** and run setup:
-   ```powershell
-   .\setup.ps1
-   ```
-
-2. **From now on, just double-click** `run.bat` or `run.ps1` to start!
-   - No terminal commands needed
-   - Window stays open so you see any errors
-   - Browser opens automatically
-
-📖 **Full details:** See [RUN_GUIDE.md](RUN_GUIDE.md) for more options
-
-### Option 3: Run Locally (macOS/Linux/Manual)
 ```bash
-# Setup (one time)
-chmod +x setup.sh
-./setup.sh
-
-# Run the app
-streamlit run app.py
-```
-
-📖 **Full setup instructions:** See [SETUP_GUIDE.md](SETUP_GUIDE.md) or [QUICKSTART.md](QUICKSTART.md)
-
-### Option 4: Clone & Manual Setup
-```bash
-git clone https://github.com/vctmasters1/PDS-Guitar-Tuner-WEB.git
-cd PDS-Guitar-Tuner-WEB
-python -m venv .venv
-# Activate virtual environment (see QUICKSTART.md)
-pip install -r requirements.txt
-streamlit run app.py
+git clone https://github.com/vctmasters1/Guitar-Tuner-WEB.git
+cd Guitar-Tuner-WEB
+# Open index.html in your browser - no build step needed!
 ```
 
 ## 🎯 How to Use
 
-1. Open the [live app](https://guitar-tuner-web.streamlit.app)
-2. **Grant microphone permission** when prompted
-3. **Select your tuning reference** (or use default 440 Hz)
-4. **Pluck a guitar string**
-5. **Watch the live feedback:**
-   - 🟢 **Green** = In tune
-   - 🟡 **Yellow** = Close
+1. **Open the app** in your browser
+2. **Click "Start Microphone"** and grant permission
+3. **Pluck a guitar string**
+4. **Watch the visual feedback:**
+   - 🟢 **Green** = In tune (±5 cents)
+   - 🟠 **Orange** = Close (±15 cents)
    - 🔴 **Red** = Needs adjustment
-6. **Tune until green**
-7. **Repeat for all 6 strings**
+5. **Adjust until the needle is centered**
+6. **Repeat for all 6 strings**
 
 ## ✨ Features
 
-- **Real-time Frequency Detection** - Uses FFT to analyze audio
-- **Visual Indicators** - Color-coded feedback and interactive charts
-- **Multiple Tuning References** - 432/440/442/444 Hz or custom
-- **Temperament Systems** - Equal Temperament & Just Intonation
-- **Mobile Friendly** - Works on phones, tablets, and desktops
-- **No Installation** - Web-based, runs in any browser
-- **Zero Cost** - Free and open source
+- **Real-time Pitch Detection** - Uses Web Audio API autocorrelation
+- **Visual Tuning Gauges** - Individual needle for each string
+- **Interactive Piano** - Click keys to hear reference tones
+- **Multiple Reference Frequencies** - 432/440/442/444 Hz
+- **Adjustable Sensitivity** - dB threshold slider
+- **Mobile Friendly** - Responsive design works on all devices
+- **Fully Offline** - Works without internet after loading
+- **Zero Dependencies** - Pure HTML/CSS/JavaScript
 
 ## 📊 Display Features
 
 | Feature | Description |
 |---------|-------------|
-| **Frequency Spectrum** | Real-time FFT visualization |
-| **Tuner Gauge** | Visual accuracy indicator showing cents deviation |
-| **String Status** | Color-coded indicators for all 6 guitar strings |
-| **Live Metrics** | Detected frequency, current string, target frequency |
-| **Settings Panel** | Adjust reference frequency and temperament on the fly |
+| **Hz Display** | Real-time detected frequency |
+| **dB Level** | Input volume meter |
+| **String Gauges** | Visual cents deviation for each string |
+| **Piano Keyboard** | Interactive vertical keyboard (D2-A4) |
+| **Status Indicators** | IN TUNE / CLOSE / FLAT / SHARP |
 
-## 🎛️ Customization
+## 🎛️ Settings
 
-### Available Tuning References
-- 432 Hz (Verdi tuning)
-- 440 Hz (Standard A4)
+### Reference Frequency
+- 432 Hz
+- 440 Hz (Standard - default)
 - 442 Hz
 - 444 Hz
-- Custom frequency (400-460 Hz range)
 
-### Temperament Systems
-- **Equal Temperament (12-TET)** - Standard Western music
-- **Just Intonation** - Pure harmonic ratios
+### Sensitivity
+Adjust the dB threshold (-60 to -20 dB) to filter out background noise.
 
-### Adjustable Settings
-- Tuning tolerance (0.1 - 5.0 Hz)
-- Reference frequency customization
+## 🎸 Guitar Strings
 
-## 🛠️ Technical Stack
+| String | Note | Frequency (440 Hz ref) |
+|--------|------|------------------------|
+| 6 (thickest) | E2 | 82.41 Hz |
+| 5 | A2 | 110.00 Hz |
+| 4 | D3 | 146.83 Hz |
+| 3 | G3 | 196.00 Hz |
+| 2 | B3 | 246.94 Hz |
+| 1 (thinnest) | E4 | 329.63 Hz |
 
-- **Frontend**: Streamlit + Plotly
-- **Audio Processing**: NumPy, SciPy (FFT analysis)
-- **Real-time Audio**: Streamlit-WebRTC
-- **Deployment**: Streamlit Cloud (free)
+## 🔧 Technical Details
 
-## 📦 Installation (Local Development)
+### How It Works
+1. **Microphone Access** - Uses `navigator.mediaDevices.getUserMedia()`
+2. **Audio Analysis** - Web Audio API `AnalyserNode` with 4096 FFT size
+3. **Pitch Detection** - Autocorrelation algorithm finds fundamental frequency
+4. **Harmonic Filtering** - Prevents octave jumps
+5. **Visual Feedback** - Updates at 10Hz (100ms intervals)
 
-### Requirements
-- Python 3.8+
-- Microphone
-- Modern web browser
-
-### Setup
-
-```bash
-# Clone repository
-git clone https://github.com/vctmasters1/PDS-Guitar-Tuner-WEB.git
-cd PDS-Guitar-Tuner-WEB
-
-# Create virtual environment (optional)
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Run application
-streamlit run app.py
+### Formula
+All frequencies calculated using Equal Temperament (12-TET):
+```
+frequency = reference_freq × 2^(semitones_from_A4 / 12)
 ```
 
-App will open at `http://localhost:8501`
+### Browser Support
+- Chrome/Edge: ✅ Full support
+- Firefox: ✅ Full support
+- Safari: ✅ Full support (iOS 14.5+)
 
-## 🚀 Deployment
-
-### Deploy to Streamlit Cloud (Free & Easy)
-
-1. Fork the repository on GitHub
-2. Go to [Streamlit Cloud](https://streamlit.io/cloud)
-3. Sign in with GitHub
-4. Click "New app" → Select your fork
-5. Done! Your app is live
-
-**See [DEPLOYMENT.md](DEPLOYMENT.md) for more options:**
-- Heroku (free tier)
-- Docker
-- AWS/Azure
-- Custom server
-
-## 📖 Documentation
-
-- **[QUICKSTART.md](QUICKSTART.md)** - Get running in 5 minutes
-- **[DEPLOYMENT.md](DEPLOYMENT.md)** - Deploy online
-- **[README.md](README.md)** - Full documentation
-
-## 🎓 How It Works
-
-1. **Audio Capture** - Records audio via your microphone (WebRTC)
-2. **FFT Analysis** - Fast Fourier Transform to detect fundamental frequency
-3. **String Recognition** - Matches frequency to closest guitar string
-4. **Cents Calculation** - Shows deviation from perfect pitch
-5. **Visual Feedback** - Real-time displays for tuning guidance
-
-### Guitar String Frequencies (E Standard Tuning @ 440 Hz)
-
-| String | Note | Frequency |
-|--------|------|-----------|
-| E (6) | E2 | 82.41 Hz |
-| A (5) | A2 | 110.00 Hz |
-| D (4) | D3 | 146.83 Hz |
-| G (3) | G3 | 196.00 Hz |
-| B (2) | B3 | 246.94 Hz |
-| E (1) | E4 | 329.63 Hz |
-
-## 🆘 Troubleshooting
-
-| Issue | Solution |
-|-------|----------|
-| **Microphone not working** | Check browser permissions, use HTTPS (live app uses HTTPS automatically) |
-| **Wrong frequency detected** | Ensure quiet environment, play one string at a time |
-| **Detection lag** | Check internet connection, close other browser tabs |
-| **Can't find app online** | Visit [guitar-tuner-web.streamlit.app](https://guitar-tuner-web.streamlit.app) |
-| **Local app won't start** | Run `pip install -r requirements.txt` again |
+**Note:** HTTPS is required for microphone access. GitHub Pages provides this automatically.
 
 ## 📁 Project Structure
 
 ```
-PDS-Guitar-Tuner-WEB/
-├── app.py                 # Main Streamlit app
-├── requirements.txt       # Dependencies
-├── README.md             # This file
-├── QUICKSTART.md         # Quick setup guide
-├── DEPLOYMENT.md         # Deployment options
-├── Procfile              # Heroku config
-├── .gitignore           # Git ignore rules
-├── .streamlit/
-│   └── config.toml      # Streamlit theme config
-└── src/
-    ├── core/
-    │   ├── config.py     # Configuration
-    │   └── tuner.py      # Tuning logic
-    └── audio/
-        └── capture.py    # Audio FFT analysis
+Guitar-Tuner-WEB/
+├── index.html          # HTML structure
+├── css/
+│   └── styles.css      # All styling
+├── js/
+│   ├── config.js       # Configuration & constants
+│   ├── audio.js        # Web Audio API & pitch detection
+│   ├── ui.js           # UI rendering
+│   └── app.js          # Main initialization
+├── README.md           # This file
+└── LICENSE             # MIT License
 ```
+
+Industry-standard separation of concerns:
+
+## 🚀 Deployment
+
+### GitHub Pages (Free Hosting)
+1. Push `index.html` to your repository
+2. Go to **Settings** → **Pages**
+3. Source: **Deploy from a branch**
+4. Branch: **master**, Folder: **/ (root)**
+5. Your app is live at `https://<username>.github.io/<repo>/`
+
+### Any Static Host
+Just upload `index.html` to any web server. No configuration needed.
+
+## 📄 License
+
+MIT License - See [LICENSE](LICENSE) for details.
 
 ## 🤝 Contributing
 
-Found a bug? Have a feature idea? 
-
 1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/awesome-feature`)
-3. Commit changes (`git commit -m 'Add awesome feature'`)
-4. Push to branch (`git push origin feature/awesome-feature`)
-5. Open a Pull Request
+2. Make your changes to `index.html`
+3. Test locally by opening in browser
+4. Submit a pull request
 
-## 📜 License
-
-MIT License - feel free to use this project for any purpose!
-
-## 🎵 Support
-
-Need help?
-- 📖 Check [QUICKSTART.md](QUICKSTART.md)
-- 🚀 See [DEPLOYMENT.md](DEPLOYMENT.md) for setup help
-- 🐛 Open an [Issue](https://github.com/vctmasters1/PDS-Guitar-Tuner-WEB/issues)
-
----
-
-**Made with ❤️ for guitarists everywhere** 🎸
-
-### Try it now: [guitar-tuner-web.streamlit.app](https://guitar-tuner-web.streamlit.app)
+Keep everything in the single `index.html` file unless there's a specific reason to split.

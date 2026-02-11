@@ -1,292 +1,301 @@
 # Guitar Tuner Web - Comprehensive AI Instructions
 
 ## Project Scope
-Web-based real-time guitar tuner using Streamlit, FFT audio analysis, and mathematical frequency calculations. Provides visual feedback for pitch accuracy across 6 guitar strings with support for multiple tuning references and temperament systems.
+**Pure static web-based** real-time guitar tuner using HTML, CSS, and JavaScript. Uses the Web Audio API for microphone access and autocorrelation-based pitch detection. Provides visual feedback for pitch accuracy across 6 guitar strings. **No server required** - runs entirely in the browser.
+
+---
+
+## Architecture: Modular Static Web App
+
+### Why Static?
+- All audio processing happens in JavaScript via Web Audio API
+- No backend requirements - browser handles everything
+- **Deploy to GitHub Pages** - just serve static files
+- Zero dependencies (no npm, no Python, no builds)
+
+### Key Technologies
+- **Web Audio API** - Microphone access via `getUserMedia()`
+- **Autocorrelation Algorithm** - Pitch detection in JavaScript
+- **CSS Flexbox** - Responsive layout
+- **Vanilla JavaScript** - No frameworks needed
 
 ---
 
 ## Project Structure
 
-### Root Directory Files (Documentation & Config)
-- `app.py` - Main Streamlit application entry point (ONLY app file in root)
-- `requirements.txt` - Python dependencies
-- `README.md` - User-facing overview
-- `QUICKSTART.md` - Quick setup guide
-- `CONTRIBUTING.md` - Contribution guidelines
-- `Procfile` - Deployment configuration
-- `LICENSE` - MIT License
-- Documentation files (.md only, no backups)
-
-### Source Code Organization (`src/`)
 ```
-src/
-├── core/
-│   ├── config.py      # Constants, colors, tuning data
-│   ├── tuner.py       # Musical frequency calculations
-│   └── __init__.py
-├── audio/
-│   ├── capture.py     # Audio input & FFT analysis
-│   └── __init__.py
-└── __init__.py
+Guitar-Tuner-WEB/
+├── index.html              # HTML structure only
+├── css/
+│   └── styles.css          # All CSS styles
+├── js/
+│   ├── config.js           # Configuration & constants
+│   ├── audio.js            # Web Audio API & pitch detection
+│   ├── ui.js               # UI rendering functions
+│   └── app.js              # Main initialization
+├── README.md               # User-facing documentation
+├── LICENSE                 # MIT License
+├── AI-Instruct.md          # This file
+└── .github/
+    └── copilot-instructions.md
 ```
 
-### Development & Reference
-- `UPSTREAM-RESEARCH/` - Reference PC implementation (tkinter version)
-- `.dev.md/` - Development notes directory
-- `.github/` - CI/CD and issue templates
-- `.streamlit/` - Streamlit configuration
-- `.venv/` - Python virtual environment
+---
+
+## File Responsibilities
+
+### index.html
+- DOCTYPE and meta tags
+- Semantic HTML structure
+- Links to external CSS (`css/styles.css`)
+- Links to external JS (in order: config → audio → ui → app)
+- NO inline styles or scripts
+
+### css/styles.css
+- All visual styling
+- Reset and base styles
+- Component styles (header, settings, buttons, gauges, piano)
+- Responsive media queries
+- CSS custom properties (if needed)
+
+### js/config.js
+- Configuration variables (`REFERENCE_FREQ`, `DB_THRESHOLD`)
+- `GUITAR_STRINGS` array with semitone offsets
+- `PIANO_NOTES` array (generated)
+- `calculateFrequencies()` - recalculate based on reference
+- `updateReferenceFreq()` - handle dropdown change
+- `updateThreshold()` - handle slider change
+
+### js/audio.js
+- Web Audio API setup (`audioContext`, `analyser`)
+- `startAudio()` - initialize microphone input
+- `stopAudio()` - cleanup audio resources
+- `detectPitch()` - main detection loop (called every 100ms)
+- `autoCorrelate()` - pitch detection algorithm
+- `playNote()` - play reference tone via oscillator
+- Harmonic filtering logic
+
+### js/ui.js
+- `initUI()` - initialize all UI components
+- `renderStringRows()` - generate string row HTML
+- `renderPianoKeyboard()` - generate piano key HTML
+- DOM manipulation functions
+
+### js/app.js
+- `initApp()` - application entry point
+- DOMContentLoaded event listener
+- Calls `calculateFrequencies()` and `initUI()`
+
+---
+
+## Deployment: GitHub Pages
+
+### Setup (One-Time)
+1. Push all files to repository
+2. Go to repository **Settings** → **Pages**
+3. Source: **Deploy from a branch**
+4. Branch: **master** (or main), folder: **/ (root)**
+5. Save
+
+### URL
+After enabling, app is live at:
+```
+https://<username>.github.io/<repo-name>/
+```
+
+### No Build Step Required
+- GitHub serves static files directly
+- Updates deploy automatically on push
+- HTTPS enabled by default
 
 ---
 
 ## CRITICAL - Frequency Calculation Requirements
 
 ### Rule 1: NO HARDCODED FREQUENCIES
-**ALL target frequencies must be mathematically calculated, NEVER hardcoded.**
+**ALL target frequencies must be mathematically calculated.**
 
-When render_string_rows() executes:
-```python
-target_freq = st.session_state.tuner.calculate_frequency(note_name, octave_offset)
+```javascript
+// ✅ CORRECT - Calculate dynamically (in js/config.js)
+const freq = REFERENCE_FREQ * Math.pow(2, semitones / 12);
+
+// ❌ WRONG - Hardcoded value
+const freq = 82.41;
 ```
 
-This MUST call the tuner's formula-based calculation, not a lookup table.
-
-### Rule 2: Tuner Object Lifecycle
-The tuner object MUST be recreated when settings change:
-```python
-# When reference_freq or temperament changes:
-st.session_state.tuner = GuitarTuner(
-    st.session_state.reference_freq, 
-    st.session_state.temperament
-)
+### Rule 2: Recalculate on Settings Change
+When reference frequency changes, recalculate all frequencies:
+```javascript
+function updateReferenceFreq() {
+    REFERENCE_FREQ = parseFloat(document.getElementById('refFreq').value);
+    calculateFrequencies();  // Recalculates all string/piano frequencies
+    initUI();                // Rebuilds UI with new values
+}
 ```
 
-### Rule 3: Frequency Calculation Formulas
-**Equal Temperament (12-TET):**
+### Rule 3: Frequency Formula (Equal Temperament 12-TET)
 ```
-frequency = reference_freq * 2^(semitones_from_A4 / 12)
-```
-
-**Just Intonation:**
-```
-frequency = (reference_freq / 5/3) * harmonic_ratio * 2^(octave_offset)
+frequency = reference_freq × 2^(semitones_from_A4 / 12)
 ```
 
-Example: A4 = 440 Hz, E4 = 440 * 2^(-5/12) ≈ 329.63 Hz
+Example: A4 = 440 Hz, E2 = 440 × 2^(-29/12) ≈ 82.41 Hz
 
 ---
 
-## UI Layout - NON-NEGOTIABLE
+## UI Layout
 
-### Two-Column Layout (REQUIRED)
+### Structure
 ```
 ┌─────────────────────────────────────────────────┐
-│  ⚙️ SIDEBAR                                     │
-│  - Tuning Reference (dropdown)                  │
-│  - Temperament (radio)                          │
-│  - Tolerance (slider)                           │
+│  HEADER - Title & Description                   │
+├─────────────────────────────────────────────────┤
+│  SETTINGS BAR - Reference freq, Sensitivity     │
+├─────────────────────────────────────────────────┤
+│                MAIN CONTAINER                   │
+│  ┌──────────────────────┬───────────────────┐   │
+│  │  LEFT PANEL (2/3)    │  RIGHT PANEL      │   │
+│  │                      │                   │   │
+│  │  [Start/Stop]        │  Piano Keyboard   │   │
+│  │  [Hz/dB Display]     │  (vertical keys)  │   │
+│  │                      │                   │   │
+│  │  String Row: E2      │  D2 ──────────    │   │
+│  │  String Row: A2      │  D#2 ────────     │   │
+│  │  String Row: D3      │  E2 ──────────    │   │
+│  │  String Row: G3      │  ...              │   │
+│  │  String Row: B3      │  (scrollable)     │   │
+│  │  String Row: E4      │                   │   │
+│  └──────────────────────┴───────────────────┘   │
 └─────────────────────────────────────────────────┘
-┌────────────────────────────┬────────────────────┐
-│  LEFT COLUMN (2/3)         │  RIGHT (1/3)       │
-│  🎸 String Rows            │  ⌨️ Piano          │
-│                            │                     │
-│  [E (6) Tan Row]           │  D2 ┌──────┐       │
-│  Target: 82.41 Hz          │      │      │       │
-│  Detected: 82.45 Hz        │  D#2 │      │       │
-│  Deviation: +0.5¢ ✓        │      │      │       │
-│                            │  E2 ┌┴──────┴┐      │
-│  [A (5) Tan Row]           │      │ 82.41  │      │
-│  Target: 110.00 Hz         │      │ Hz     │      │
-│  Detected: -- Hz           │      └────────┘      │
-│  Status: IDLE              │                     │
-│                            │  (scrollable)       │
-│  ... (4 more strings)      │                     │
-└────────────────────────────┴────────────────────┘
 ```
 
-### Left Column: String Rows
-- **6 rows** (one per string)
-- **Layout per row**: String Name | Target Freq | Detected Freq | Status
-- **Colors**: Tan gradient (STRING_COLORS)
-- **Target Freq**: Recalculated on every render (NOT cached)
-- **Status**: Color-coded based on cents deviation
+### String Rows (rendered by js/ui.js)
+Each row contains:
+- **String name badge** (colored with tan gradient)
+- **Target frequency** (calculated, not hardcoded)
+- **Detected frequency** (live from microphone)
+- **Gauge** (visual cents deviation indicator with needle)
+- **Status** (IN TUNE / CLOSE / FLAT / SHARP)
 
-### Right Column: Piano Keyboard
-- **VERTICAL layout ONLY** (keys stacked top-to-bottom, NOT horizontal)
-- **Visual styling** (NOT plain text) - Each key is a styled div element
-- **Range**: D2 (27.5 Hz) through A4 (440 Hz) = 30+ notes
-- **Each key displays**: Note name + octave, Frequency (Hz)
-- **Container**: Scrollable with max-height 600px (overflow-y auto)
-- **White keys**: Light background (#f5f5f5), dark text, 60px height
-- **Black keys**: Dark background (#1a1a1a), white text, 50px height
-- **Highlighting**:
-  - Guitar string notes: Colored with STRING_COLORS (tan gradient)
-  - Detected note: 4px left border in accent color
-- **DO NOT** change to horizontal layout under any circumstances
+### Piano Keyboard (rendered by js/ui.js)
+- **VERTICAL layout ONLY** (keys stacked top-to-bottom)
+- Range: D2 through A4 (~30 notes)
+- White keys: light background
+- Black keys: dark background, indented
+- Guitar string notes: highlighted with color
+- Detected note: green border highlight
+- Click to play tone (Web Audio oscillator)
 
 ---
 
-## Configuration Management
+## Audio Processing (js/audio.js)
 
-### config.py Format
-```python
-# Temperament constants - SHORT NAMES ONLY
-TEMPERAMENT_EQUAL = "equal"
-TEMPERAMENT_JUST = "just"
-
-# Guitar strings - (display_name, note_name, octave_offset)
-GUITAR_STRINGS = [
-    ('E (6)', 'E', -2),   # E2
-    ('A (5)', 'A', -2),   # A2
-    ('D (4)', 'D', -1),   # D3
-    ('G (3)', 'G', -1),   # G3
-    ('B (2)', 'B', -1),   # B3
-    ('E (1)', 'E', 0),    # E4
-]
-
-# Tuning frequencies (Hz)
-TUNING_PRESETS = [
-    ("432 Hz", 432.0),
-    ("440 Hz (A4)", 440.0),
-    ("442 Hz", 442.0),
-    ("444 Hz", 444.0),
-]
-
-# Colors - ALWAYS TAN GRADIENT
-STRING_COLORS = [
-    '#8B7355',  # Dark tan
-    '#9D8164',  # Medium-dark tan
-    '#AF8F73',  # Medium tan
-    '#C19D82',  # Medium-light tan
-    '#D3AB91',  # Light tan
-    '#E5B9A0',  # Very light tan
-]
-
-# Thresholds
-IN_TUNE_THRESHOLD = 5.0      # ±5 cents
-CLOSE_THRESHOLD = 50.0       # ±50 cents
-```
-
----
-
-## Streamlit State Management
-
-### Session State Initialization
-```python
-def initialize_session_state():
-    STATE_VARS = {
-        "reference_freq": DEFAULT_REFERENCE_FREQ,
-        "temperament": DEFAULT_TEMPERAMENT,
-        "tolerance_hz": DEFAULT_TOLERANCE_HZ,
-        "detected_frequency": None,
-        "current_string_idx": None,
-        "cents_deviation": 0,
-        "tuner": GuitarTuner(DEFAULT_REFERENCE_FREQ, DEFAULT_TEMPERAMENT),
-        "audio_capture": AudioCapture(),
-    }
-    for key, value in STATE_VARS.items():
-        if key not in st.session_state:
-            st.session_state[key] = value
-```
-
-### Settings Updates
-```python
-# In sidebar:
-st.session_state.reference_freq = preset_freq
-st.session_state.temperament = temperament
-
-# Then recreate tuner for new state:
-st.session_state.tuner = GuitarTuner(
-    st.session_state.reference_freq,
-    st.session_state.temperament
-)
-```
-
----
-
-## Root Directory Cleanup Rules
-
-### KEEP in Root
-- `app.py` - Single entry point
-- `requirements.txt` - Dependencies
-- `README.md`, `QUICKSTART.md`, `CONTRIBUTING.md` - Documentation
-- `Procfile`, `LICENSE` - Deployment & legal
-- `Guitar-Tuner-WEB.code-workspace` - VS Code workspace
-- Hidden directories: `.github/`, `.streamlit/`, `.venv/`, `.git/`
-
-### REMOVE from Root
-- `app_old.py`, `app_backup.py` etc. - Use git for version control
-- `*.bat`, `*.ps1` scripts - Move to `.dev.md/` if needed
-- Old notebooks or test files
-- Non-essential README files
-
----
-
-## Code Style & Quality
-
-### Python Standards
-- **PEP 8**: 79 char lines, proper spacing
-- **Docstrings**: All functions and classes required
-- **Type hints**: Where practical for clarity
-- **No magic numbers**: Use config.py constants
-
-### Function Pattern
-```python
-def meaningful_function_name(required_param):
-    """
-    One-line description.
-    
-    Args:
-        required_param: Description
+### Web Audio API Setup
+```javascript
+navigator.mediaDevices.getUserMedia({ audio: true })
+    .then(function(stream) {
+        audioContext = new AudioContext();
+        analyser = audioContext.createAnalyser();
+        analyser.fftSize = 4096;
         
-    Returns:
-        Description of return value
-    """
-    # Implementation
-    return result
+        microphone = audioContext.createMediaStreamSource(stream);
+        microphone.connect(analyser);
+        
+        setInterval(detectPitch, 100);  // 10Hz update rate
+    });
+```
+
+### Pitch Detection: Autocorrelation
+```javascript
+function autoCorrelate(buffer, sampleRate) {
+    // 1. Calculate RMS to check signal level
+    // 2. Trim silent ends of buffer
+    // 3. Compute autocorrelation coefficients
+    // 4. Find peak (fundamental period)
+    // 5. Parabolic interpolation for accuracy
+    // 6. Return frequency = sampleRate / period
+}
+```
+
+### Harmonic Filtering
+Prevent octave jumps by comparing to previous frequency:
+```javascript
+if (freqRounded / lastValidFreq > 1.9 && freqRounded / lastValidFreq < 2.1) {
+    freqRounded = lastValidFreq;  // Ignore octave jump
+}
 ```
 
 ---
 
-## Testing Before Commit
+## Configuration (js/config.js)
 
-### Functional Testing
-- [ ] Change tuning preset → target frequencies update
-- [ ] Change temperament → target frequencies update (different values)
-- [ ] Play a note → appears on piano keyboard
-- [ ] Mic detection works → updates detected frequency
-- [ ] Cents deviation correct → ±5 = green, ±50 = yellow, >50 = red
-
-### Visual Testing
-- [ ] Two-column layout displays correctly
-- [ ] Piano keyboard is NOT just text (has styling/colors)
-- [ ] String rows use tan gradient colors
-- [ ] Guitar string notes highlighted on piano
-- [ ] Responsive on mobile (tablet-like dimensions)
-
-### Run Locally
-```bash
-streamlit run app.py
+### Guitar Strings
+```javascript
+const GUITAR_STRINGS = [
+    { name: 'E2', displayName: 'E (6)', semitones: -29, color: '#8B7355' },
+    { name: 'A2', displayName: 'A (5)', semitones: -24, color: '#9D8164' },
+    { name: 'D3', displayName: 'D (4)', semitones: -19, color: '#AF8F73' },
+    { name: 'G3', displayName: 'G (3)', semitones: -14, color: '#C19D82' },
+    { name: 'B3', displayName: 'B (2)', semitones: -10, color: '#D3AB91' },
+    { name: 'E4', displayName: 'E (1)', semitones: -5,  color: '#E5B9A0' }
+];
 ```
+
+### Tuning Reference Options
+- 432 Hz
+- 440 Hz (Standard - default)
+- 442 Hz
+- 444 Hz
+
+### Thresholds
+- **In-tune**: ±5 cents (green)
+- **Close**: ±15 cents (orange)
+- **Off**: >15 cents (red)
+- **dB threshold**: -40 dB (adjustable via slider)
 
 ---
 
-## When Modifying Code
+## DO's and DON'Ts
 
-### Adding Features
-1. Update `src/core/config.py` if new constants
-2. Implement logic in appropriate `src/*/` module
-3. Call from `app.py` (orchestrator only)
-4. Update this AI-Instruct.md if pattern changes
+### ✅ DO
+- Keep HTML, CSS, JS in separate files
+- Calculate frequencies dynamically
+- Use Web Audio API for all audio
+- Make UI responsive (mobile-friendly)
+- Use vanilla JavaScript (no frameworks)
+- Test microphone permissions
+- Maintain clear file separation
 
-### Fixing Frequency Issues
-1. Verify `calculate_frequency()` formula in tuner.py
-2. Check tuner is recreated after state changes
-3. Ensure `render_string_rows()` calls `st.session_state.tuner` (current instance)
-4. Use `st.write(f"Debug: {calculated_value}")` for testing
+### ❌ DON'T
+- Hardcode frequency values
+- Add npm/build dependencies
+- Require a server to run
+- Put inline styles in HTML
+- Put inline scripts in HTML
+- Change piano to horizontal layout
+- Mix concerns between files
 
-### UI Improvements
-1. Keep two-column layout
-2. Update CSS in markdown style blocks
-3. Maintain tan STRING_COLORS consistency
-4. Test on various screen sizes
+---
+
+## Testing Checklist
+
+- [ ] Open `index.html` directly in browser
+- [ ] CSS loads correctly (styled UI appears)
+- [ ] JS loads without console errors
+- [ ] Click "Start Microphone" - permissions work
+- [ ] Play a note - frequency detected and displayed
+- [ ] Correct string row activates and shows gauge
+- [ ] Piano key highlights for detected note
+- [ ] Change reference frequency - all values update
+- [ ] Adjust sensitivity slider - affects detection
+- [ ] Click piano keys - plays tones
+- [ ] Works on mobile browsers
+- [ ] Works when served via GitHub Pages (HTTPS)
+
+---
+
+## Browser Requirements
+
+- **Chrome/Edge**: Full support
+- **Firefox**: Full support
+- **Safari**: Full support (iOS 14.5+)
+- **HTTPS required** for microphone access (GitHub Pages provides this)
