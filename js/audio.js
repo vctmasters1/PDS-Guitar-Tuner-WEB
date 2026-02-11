@@ -87,8 +87,8 @@ function stopAudio() {
  * Format frequency for display
  */
 function formatHz(freq) {
-    if (freq <= 0) return '----.--';
-    return freq.toFixed(2).padStart(7, ' ');
+    if (freq <= 0) return '---.--';
+    return freq.toFixed(2).padStart(6, ' ');
 }
 
 /**
