@@ -7,7 +7,7 @@
     <meta name="description" content="Real-time guitar tuner using Web Audio API. No installation required.">
     <meta name="theme-color" content="#1e1e1e">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎸</text></svg>">
-    <link rel="stylesheet" href="css/styles.css?v=2">
+    <link rel="stylesheet" href="css/styles.css?v=4">
 </head>
 <body>
 
@@ -35,12 +35,12 @@
                 <option value="just">Just Intonation</option>
             </select>
         </div>
+        <button class="btn-info" onclick="showInfoModal()" title="Learn about tuning settings">ⓘ</button>
         <div class="setting-group">
             <label for="dbThreshold">Sensitivity:</label>
             <input type="range" id="dbThreshold" min="-60" max="-20" value="-40" onchange="updateThreshold()">
             <span id="dbThresholdVal">-40 dB</span>
         </div>
-        <button class="btn-info" onclick="showInfoModal()" title="Learn about tuning settings">ⓘ</button>
     </div>
 
     <!-- Info Modal -->

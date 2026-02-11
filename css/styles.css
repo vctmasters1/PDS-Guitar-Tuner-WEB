@@ -78,7 +78,6 @@ body {
     font-size: 16px;
     cursor: pointer;
     transition: all 0.2s;
-    margin-left: auto;
 }
 
 .btn-info:hover {
@@ -436,8 +435,6 @@ body {
 }
 
 .piano-container {
-    max-height: 500px;
-    overflow-y: auto;
     background: #2d2d2d;
     border-radius: 8px;
     padding: 8px;
@@ -501,10 +498,6 @@ body {
 
     .right-panel {
         order: -1;
-    }
-
-    .piano-container {
-        max-height: 200px;
     }
 
     .string-row {
