@@ -1,6 +1,6 @@
 # 🎸 Guitar Tuner - Web App
 
-[![GitHub Pages](https://img.shields.io/badge/Live-GitHub%20Pages-brightgreen)](https://vctmasters1.github.io/Guitar-Tuner-WEB/)
+[![GitHub Pages](https://img.shields.io/badge/Live-GitHub%20Pages-brightgreen)](https://vctmasters1.github.io/PDS-Guitar-Tuner-WEB/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![No Dependencies](https://img.shields.io/badge/Dependencies-None-blue)]()
 
@@ -8,7 +8,7 @@ A real-time guitar tuner that runs entirely in your browser. **No installation, 
 
 ## 🎵 Try It Now
 
-**[Open Guitar Tuner](https://vctmasters1.github.io/Guitar-Tuner-WEB/)** ← Click to use immediately!
+**[Open Guitar Tuner](https://vctmasters1.github.io/PDS-Guitar-Tuner-WEB/)** ← Click to use immediately!
 
 Or download `index.html` and open it directly in your browser.
 

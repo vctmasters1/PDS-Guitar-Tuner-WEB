@@ -134,7 +134,9 @@ function updateThreshold() {
  * Show the info modal
  */
 function showInfoModal() {
-    document.getElementById('infoModal').classList.add('active');
+    const modal = document.getElementById('infoModal');
+    modal.style.display = 'flex';
+    modal.classList.add('active');
     document.body.style.overflow = 'hidden';
 }
 
@@ -144,6 +146,8 @@ function showInfoModal() {
 function hideInfoModal(event) {
     // If called from overlay click, only close if clicked on overlay itself
     if (event && event.target !== event.currentTarget) return;
-    document.getElementById('infoModal').classList.remove('active');
+    const modal = document.getElementById('infoModal');
+    modal.style.display = 'none';
+    modal.classList.remove('active');
     document.body.style.overflow = '';
 }

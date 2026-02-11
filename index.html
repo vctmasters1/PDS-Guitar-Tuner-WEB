@@ -7,7 +7,7 @@
     <meta name="description" content="Real-time guitar tuner using Web Audio API. No installation required.">
     <meta name="theme-color" content="#1e1e1e">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎸</text></svg>">
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/styles.css?v=2">
 </head>
 <body>
 
@@ -44,7 +44,7 @@
     </div>
 
     <!-- Info Modal -->
-    <div id="infoModal" class="modal-overlay" onclick="hideInfoModal(event)">
+    <div id="infoModal" class="modal-overlay" style="display:none;" onclick="hideInfoModal(event)">
         <div class="modal-content" onclick="event.stopPropagation()">
             <button class="modal-close" onclick="hideInfoModal()">&times;</button>
             <h2>🎵 Tuning Information</h2>
@@ -120,10 +120,10 @@
     </main>
 
     <!-- JavaScript (load order matters) -->
-    <script src="js/config.js"></script>
-    <script src="js/audio.js"></script>
-    <script src="js/ui.js"></script>
-    <script src="js/app.js"></script>
+    <script src="js/config.js?v=2"></script>
+    <script src="js/audio.js?v=2"></script>
+    <script src="js/ui.js?v=2"></script>
+    <script src="js/app.js?v=2"></script>
 
 </body>
 </html>
