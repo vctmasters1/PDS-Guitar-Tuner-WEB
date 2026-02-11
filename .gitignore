@@ -48,4 +48,10 @@ htmlcov/
 
 # OS
 .DS_Store
+
+# Archived/Old files
+.old/
 Thumbs.db
+
+# Development notes (local only)
+.dev.md/

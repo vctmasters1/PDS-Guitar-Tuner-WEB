@@ -4,7 +4,7 @@ import numpy as np
 from scipy.fft import fft
 from scipy.signal import find_peaks
 import streamlit as st
-from core.config import CHUNK_SIZE, SAMPLE_RATE
+from src.core.config import CHUNK_SIZE, SAMPLE_RATE
 
 
 class AudioCapture:

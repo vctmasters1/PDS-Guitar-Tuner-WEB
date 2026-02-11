@@ -1,7 +1,7 @@
 """Core tuner logic for frequency analysis and calculations"""
 
 import numpy as np
-from core.config import (
+from src.core.config import (
     IN_TUNE_THRESHOLD,
     CLOSE_THRESHOLD,
     TEMPERAMENT_EQUAL,

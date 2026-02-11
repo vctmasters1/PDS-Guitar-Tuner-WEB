@@ -14,16 +14,40 @@ A real-time guitar tuner web application built with Streamlit. No installation r
 ### Option 1: Use Online (Recommended)
 🌐 **[Click here to use the live app](https://guitar-tuner-web.streamlit.app)** - Works on any device with a browser and microphone!
 
-### Option 2: Run Locally
-```bash
-# Clone the repository
-git clone https://github.com/vctmasters1/PDS-Guitar-Tuner-WEB.git
-cd PDS-Guitar-Tuner-WEB
+### Option 2: Run Locally (Windows - Easiest!)
+After running the setup script once:
 
-# Install dependencies
-pip install -r requirements.txt
+1. **Open PowerShell** and run setup:
+   ```powershell
+   .\setup.ps1
+   ```
+
+2. **From now on, just double-click** `run.bat` or `run.ps1` to start!
+   - No terminal commands needed
+   - Window stays open so you see any errors
+   - Browser opens automatically
+
+📖 **Full details:** See [RUN_GUIDE.md](RUN_GUIDE.md) for more options
+
+### Option 3: Run Locally (macOS/Linux/Manual)
+```bash
+# Setup (one time)
+chmod +x setup.sh
+./setup.sh
 
 # Run the app
+streamlit run app.py
+```
+
+📖 **Full setup instructions:** See [SETUP_GUIDE.md](SETUP_GUIDE.md) or [QUICKSTART.md](QUICKSTART.md)
+
+### Option 4: Clone & Manual Setup
+```bash
+git clone https://github.com/vctmasters1/PDS-Guitar-Tuner-WEB.git
+cd PDS-Guitar-Tuner-WEB
+python -m venv .venv
+# Activate virtual environment (see QUICKSTART.md)
+pip install -r requirements.txt
 streamlit run app.py
 ```
 

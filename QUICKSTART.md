@@ -1,42 +1,67 @@
 # 🎸 Quick Start Guide
 
-## 5-Minute Setup
+## 🚀 Fastest Setup (Recommended)
+
+We provide automated setup scripts for your convenience.
 
 ### Prerequisites
-- Python 3.8+ installed ([Download Python](https://www.python.org/downloads/))
-- Git installed ([Download Git](https://git-scm.com/))
+- Python 3.9+ installed ([Download Python](https://www.python.org/downloads/))
 - A working microphone
 
-### Installation
+### Automated Setup
 
-**Step 1: Clone the repository**
-```bash
-git clone https://github.com/vctmasters1/Guitar-Tuner-WEB.git
-cd Guitar-Tuner-WEB
+**Windows (PowerShell):**
+```powershell
+.\setup.ps1
 ```
 
-**Step 2: Create virtual environment (optional but recommended)**
+**macOS/Linux:**
+```bash
+chmod +x setup.sh
+./setup.sh
+```
+
+**Cross-platform (Python):**
+```bash
+python setup.py
+```
+
+The script will:
+- ✓ Create a virtual environment
+- ✓ Install all dependencies
+- ✓ Verify the installation
+- ✓ Check your project structure
+
+Once complete, it will show you how to activate the environment and run the app.
+
+---
+
+## 📖 Manual Setup (If Scripts Don't Work)
+
+If you prefer manual setup or the scripts encounter issues:
+
+**Step 1: Create virtual environment**
 ```bash
 # Windows
-python -m venv venv
-venv\Scripts\activate
+python -m venv .venv
+.venv\Scripts\activate
 
 # Mac/Linux
-python3 -m venv venv
-source venv/bin/activate
+python3 -m venv .venv
+source .venv/bin/activate
 ```
 
-**Step 3: Install dependencies**
+**Step 2: Install dependencies**
 ```bash
 pip install -r requirements.txt
 ```
 
-**Step 4: Run the app**
+**Step 3: Run the app**
 ```bash
 streamlit run app.py
 ```
 
-**Step 5: Open in browser**
+**Step 4: Open in browser**
 - Your browser will automatically open to `http://localhost:8501`
 - If not, manually navigate to that address
 
@@ -77,23 +102,28 @@ See [DEPLOYMENT.md](DEPLOYMENT.md) for detailed deployment options.
 
 | Problem | Solution |
 |---------|----------|
-| "Microphone not working" | Check browser permissions, refresh page |
-| "No frequency detected" | Ensure quiet environment, play louder |
-| "Python not found" | [Install Python](https://www.python.org/downloads/) and add to PATH |
-| "Module not found" | Run `pip install -r requirements.txt` |
+| Script won't run | See [SETUP_GUIDE.md](SETUP_GUIDE.md) for detailed instructions |
+| "Microphone not working" | Check browser permissions, refresh page, try different browser |
+| "No frequency detected" | Ensure quiet environment, play louder/closer to mic |
+| "Python not found" | [Install Python 3.9+](https://www.python.org/downloads/) and add to PATH |
+| "Module not found" | Run `pip install -r requirements.txt` with venv activated |
 | "Port already in use" | Run `streamlit run app.py --server.port=8502` |
+
+**Need more help?** Check [SETUP_GUIDE.md](SETUP_GUIDE.md) for comprehensive troubleshooting.
 
 ---
 
 ## Next Steps
 
-- ✅ Tune your guitar!
+- 🎸 Tune your guitar!
 - 📖 Read [README.md](README.md) for detailed features
-- 🚀 Deploy to [Streamlit Cloud](DEPLOYMENT.md)
-- 🤝 Contribute improvements
+- 📚 Full setup help: [SETUP_GUIDE.md](SETUP_GUIDE.md)
+- 🏗️ Architecture details: [AI-Instruct.md](AI-Instruct.md)
+- 🚀 Deploy online: [DEPLOYMENT.md](DEPLOYMENT.md)
+- 🤝 Contribute: [CONTRIBUTING.md](CONTRIBUTING.md)
 
 ---
 
-**Questions?** Open an issue on GitHub or check [README.md](README.md)
+**Questions?** Check [SETUP_GUIDE.md](SETUP_GUIDE.md) or open an issue on GitHub.
 
 Happy tuning! 🎸🎵
