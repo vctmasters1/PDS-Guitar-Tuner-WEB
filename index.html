@@ -29,9 +29,62 @@
             </select>
         </div>
         <div class="setting-group">
+            <label for="temperament">Tuning:</label>
+            <select id="temperament" onchange="updateTemperament()">
+                <option value="equal" selected>Equal Temperament</option>
+                <option value="just">Just Intonation</option>
+            </select>
+        </div>
+        <div class="setting-group">
             <label for="dbThreshold">Sensitivity:</label>
             <input type="range" id="dbThreshold" min="-60" max="-20" value="-40" onchange="updateThreshold()">
             <span id="dbThresholdVal">-40 dB</span>
+        </div>
+        <button class="btn-info" onclick="showInfoModal()" title="Learn about tuning settings">ⓘ</button>
+    </div>
+
+    <!-- Info Modal -->
+    <div id="infoModal" class="modal-overlay" onclick="hideInfoModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="hideInfoModal()">&times;</button>
+            <h2>🎵 Tuning Information</h2>
+            
+            <h3>Reference Frequency (A4)</h3>
+            <p>The reference frequency determines the pitch of A4, from which all other notes are calculated.</p>
+            <ul>
+                <li><strong>432 Hz</strong> - "Verdi tuning" - Some believe it sounds warmer and more natural. Used in some classical and new age music.</li>
+                <li><strong>440 Hz</strong> - International standard since 1955. Used by most orchestras, bands, and instruments worldwide.</li>
+                <li><strong>442 Hz</strong> - Common in European orchestras, especially in Germany and Austria. Slightly brighter tone.</li>
+                <li><strong>444 Hz</strong> - Used by some jazz musicians and orchestras for an even brighter sound.</li>
+            </ul>
+            
+            <h3>Temperament System</h3>
+            <p>The temperament determines how the 12 notes in an octave are spaced.</p>
+            <ul>
+                <li><strong>Equal Temperament (12-TET)</strong> - Divides the octave into 12 equal semitones. Standard for modern Western music. Every key sounds equally "in tune" (or equally "out of tune"). Formula: freq = ref × 2^(semitones/12)</li>
+                <li><strong>Just Intonation</strong> - Uses pure harmonic ratios (3:2 for fifths, 5:4 for major thirds). Intervals sound purer but only works well in specific keys. Historic tuning, used in some vocal and early music.</li>
+            </ul>
+            
+            <h3>Guitar String Frequencies</h3>
+            <table class="info-table">
+                <tr><th>String</th><th>Note</th><th>Semitones from A4</th><th>440 Hz</th></tr>
+                <tr><td>6 (thickest)</td><td>E2</td><td>-29</td><td>82.41 Hz</td></tr>
+                <tr><td>5</td><td>A2</td><td>-24</td><td>110.00 Hz</td></tr>
+                <tr><td>4</td><td>D3</td><td>-19</td><td>146.83 Hz</td></tr>
+                <tr><td>3</td><td>G3</td><td>-14</td><td>196.00 Hz</td></tr>
+                <tr><td>2</td><td>B3</td><td>-10</td><td>246.94 Hz</td></tr>
+                <tr><td>1 (thinnest)</td><td>E4</td><td>-5</td><td>329.63 Hz</td></tr>
+            </table>
+            
+            <h3>Tuning Tips</h3>
+            <ul>
+                <li>🎯 <strong>Green (±5 cents)</strong> - In tune! Perfect.</li>
+                <li>🟠 <strong>Orange (±15 cents)</strong> - Close, minor adjustment needed.</li>
+                <li>🔴 <strong>Red (&gt;15 cents)</strong> - Needs significant adjustment.</li>
+                <li>💡 Tune in a quiet environment for best results.</li>
+                <li>💡 Pluck the string firmly but not too hard.</li>
+                <li>💡 Let the note ring - the tuner needs a sustained sound.</li>
+            </ul>
         </div>
     </div>
 
