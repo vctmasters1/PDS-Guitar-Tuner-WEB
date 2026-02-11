@@ -24,8 +24,7 @@ function renderStringRows() {
             <div id="string-${idx}" class="string-row">
                 <div class="string-name" style="background: ${s.color};">${s.displayName}</div>
                 <div class="string-info">
-                    <div class="string-target">Target: ${s.freq.toFixed(2)} Hz</div>
-                    <div class="string-freq" id="string-freq-${idx}">-- Hz</div>
+                    <div class="string-target">${s.freq.toFixed(2)} Hz</div>
                 </div>
                 <div class="gauge-container">
                     <div class="gauge-labels"><span>♭ FLAT</span><span>✓</span><span>♯ SHARP</span></div>

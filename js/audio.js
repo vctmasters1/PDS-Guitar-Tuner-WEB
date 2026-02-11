@@ -70,7 +70,6 @@ function stopAudio() {
     // Reset all string rows
     GUITAR_STRINGS.forEach((s, idx) => {
         document.getElementById('string-' + idx).classList.remove('active');
-        document.getElementById('string-freq-' + idx).innerText = '-- Hz';
         document.getElementById('needle-' + idx).style.left = '50%';
         document.getElementById('needle-' + idx).style.background = '#888';
         document.getElementById('cents-' + idx).innerText = '-- cents';
@@ -179,7 +178,6 @@ function detectPitch() {
         
         // Activate this string row
         document.getElementById('string-' + closestIdx).classList.add('active');
-        document.getElementById('string-freq-' + closestIdx).innerText = freqRounded.toFixed(2) + ' Hz';
         
         // Update needle position
         const clampedCents = Math.max(-50, Math.min(50, centsRounded));
