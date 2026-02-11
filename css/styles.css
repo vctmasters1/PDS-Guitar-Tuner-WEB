@@ -512,6 +512,10 @@ body {
 }
 
 @media (max-width: 600px) {
+    .right-panel {
+        display: none;
+    }
+
     .freq-line {
         font-size: 28px;
     }
