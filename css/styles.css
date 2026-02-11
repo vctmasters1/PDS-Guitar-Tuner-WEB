@@ -512,6 +512,16 @@ body {
 }
 
 @media (max-width: 600px) {
+    .main-container {
+        padding: 10px;
+        gap: 10px;
+    }
+
+    .settings-bar {
+        padding: 10px;
+        gap: 10px;
+    }
+
     .right-panel {
         display: none;
     }
@@ -520,12 +530,17 @@ body {
         font-size: 28px;
     }
 
+    .main-display {
+        padding: 15px 10px;
+        margin-bottom: 10px;
+    }
+
     .freq-val {
-        width: 120px;
+        width: auto;
     }
 
     .db-val {
-        width: 60px;
+        width: auto;
     }
 
     .string-name {
